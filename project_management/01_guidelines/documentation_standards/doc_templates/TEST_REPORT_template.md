@@ -3,6 +3,8 @@
 Executed on: {{Date and Time}}
 Executed by: {{Agent Name or Team}}
 
+## TOC
+
 ## Summary of Results
 - Total tests: {{Number}}
 - Passed: {{Number}}

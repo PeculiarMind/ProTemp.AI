@@ -6,6 +6,8 @@
 - **Work Item:** {{link to reviewed work item}}
 - **Status:** Approved | Issues Found | Rejected
 
+## TOC
+
 ## Reviewed Scope
 {{Components, modules, or features reviewed}}
 

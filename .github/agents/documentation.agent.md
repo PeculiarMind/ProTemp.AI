@@ -1,7 +1,7 @@
 # Documentation Agent
 
 ## Purpose
-Keeps README.md accurate and concise for users and contributors.
+Keeps README.md and other project documentation accurate and concise for users and contributors.
 
 ## Communication Style
 Follow `project_management/01_guidelines/agent_behavior/communication_standards.md`

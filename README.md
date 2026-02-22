@@ -54,6 +54,7 @@ ProTemp/
 │   ├── 03_user_guide/
 │   └── 04_dev_guide/
 │
+├── AGENTS.md                            # Central registry of all available agents
 ├── CREDITS.md
 ├── LICENSE.md
 └── README.md
@@ -66,10 +67,59 @@ ProTemp/
 3. Start deriving requirements — the Requirements agent or the workflow in `project_management/01_guidelines/workflows/requirements_engineering_workflow.md` will guide you.
 4. Use the document templates in `project_management/01_guidelines/documentation_standards/doc_templates/` whenever you create a new artifact.
 5. Consult `project_management/01_guidelines/documentation_standards/documentation-standards.md` for naming conventions and storage locations.
+6. Review [AGENTS.md](AGENTS.md) to understand available agents, workflows, and supporting standards.
+
+## Tools
+
+ProTemp includes utility scripts in `project_management/00_tools/` to automate common project maintenance tasks:
+
+### File/Directory Rename and Reference Updater
+
+Automatically rename or move files and directories while updating all references throughout the workspace. Essential for refactoring project structure without breaking links.
+
+```bash
+# Rename a file and update all references
+python3 project_management/00_tools/rename_and_update_refs.py \
+  old_file.md new_file.md --dry-run
+
+# Move a directory and update all nested file references  
+python3 project_management/00_tools/rename_and_update_refs.py \
+  old_folder/ new_folder/
+```
+
+**Features:**
+- Updates references in markdown links, code, configs, and documentation
+- Handles both files and directories recursively
+- Supports various reference formats (plain text, quoted, backticks, etc.)
+- Dry-run mode to preview changes before applying
+- Automatic workspace detection
+
+### Broken Reference Finder
+
+Scan the workspace for broken references - links and textual references pointing to files that don't exist.
+
+```bash
+# Find all broken references
+python3 project_management/00_tools/find_broken_refs.py
+
+# Show detailed output
+python3 project_management/00_tools/find_broken_refs.py --verbose
+```
+
+**Features:**
+- Detects broken markdown links, quoted paths, and backticked references
+- Scans documentation, code, and configuration files
+- Reports line numbers and reference types
+- Useful for pre-commit checks and CI/CD pipelines
+- Exit code 1 if broken references found (CI-friendly)
+
+See [project_management/00_tools/TOOLS.md](project_management/00_tools/TOOLS.md) for complete documentation and examples.
 
 ## AI Agent System
 
 ProTemp ships with seven GitHub Copilot agent personas defined in `.github/agents/`. An orchestration layer in `.github/copilot-instructions.md` routes tasks to the most appropriate agent automatically.
+
+See [AGENTS.md](AGENTS.md) for the complete agent registry, including supporting standards and workflow definitions.
 
 | Agent | Responsibility |
 |-------|---------------|

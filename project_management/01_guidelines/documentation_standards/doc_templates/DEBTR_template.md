@@ -6,6 +6,8 @@
 - **Created by:** {{Author}}
 - **Priority:** {{High | Medium | Low}}
 
+## TOC
+
 ## Deviation Summary
 {{One-sentence description of the deviation from architecture vision}}
 

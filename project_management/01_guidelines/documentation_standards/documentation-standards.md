@@ -3,11 +3,11 @@
 - Maintain a Table of Contents for all created documents and update it after structure changes.
 - Keep content concise and precise; remove redundancy.
 - Use clear headings and lists; avoid filler and duplicated content.
-- Ensure all references and links to other documents are accurate and up-to-date.
+- Ensure all references and links to other documents are accurate and up-to-date. Utilize the tools available in `project_management/00_tools/` to automate link verification and verify if tangled references are just used for examples or if they have to be corrected.
 - Follow the specified templates for each document type to maintain consistency.
 - Follow `project_management/01_guidelines/agent_behavior/communication_standards.md` for tone and style in all written artifacts.
 
-# Documents
+## Documents
 
 ### Constraint Record (CR)
 - **Purpose**: Document constraints that impact design and implementation.

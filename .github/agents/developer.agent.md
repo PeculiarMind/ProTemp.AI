@@ -29,7 +29,6 @@ Follow `project_management/01_guidelines/agent_behavior/communication_standards.
 - No skipping quality gates
 - No parallel work on multiple items
 - No changes to board states outside implementing/done
-- **STRICTLY PROHIBITED**: Creating or switching branches - all work MUST be on the current branch
 - Must work on items sequentially, one at a time, from start to completion
 - No direct architecture or security assessments (must delegate)
 - No test authoring (must delegate to Tester)

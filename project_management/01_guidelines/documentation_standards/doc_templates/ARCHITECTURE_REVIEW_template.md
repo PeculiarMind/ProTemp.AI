@@ -6,6 +6,8 @@
 - **Work Item:** {{link to reviewed work item}}
 - **Status:** Compliant | Non-Compliant | Conditionally Compliant
 
+## TOC
+
 ## Reviewed Scope
 {{Components, modules, or features reviewed}}
 

@@ -10,6 +10,7 @@ This document defines the guidelines for utilizing specialized agents within thi
 - **Agent definition files**: Agents are defined in `*.agent.md` files containing their purpose, expertise, and limitations
 - **Stateless execution**: Each agent invocation is independent; agents return a final report after completion
 - **Asynchronous processing**: Agents work autonomously without requiring intermediate user interaction
+- **Tool usage**: This repository may contain tools that agents can utilize to perform specific functions those tools are defined in `project_management/00_tools/` 
 
 ## Agent Discovery and Priority
 
@@ -99,5 +100,5 @@ When creating new agents, use the template defined in `project_management/01_gui
 ## Workflows
 
 Workflow definitions are maintained in `project_management/01_guidelines/workflows/`:
-- **Requirements Engineering**: `requirements_engineering_workflow.md`
-- **Implementation**: `implementation_workflow.md`
+- **Requirements Engineering**: `project_management/01_guidelines/workflows/requirements_engineering_workflow.md`
+- **Implementation**: `project_management/01_guidelines/workflows/implementation_workflow.md`

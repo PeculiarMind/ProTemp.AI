@@ -8,6 +8,8 @@
 - **Created by:** {{Author}}
 - **Status:** {{FUNNEL | ANALYZE | READY | BACKLOG | IMPLEMENTING | DONE | OBSOLETED | REJECTED}}
 
+## TOC
+
 ## Overview
 {{Brief description of the work item's purpose and business value}}
 

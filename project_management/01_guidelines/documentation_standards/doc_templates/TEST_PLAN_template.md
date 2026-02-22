@@ -6,6 +6,8 @@
 - **Work Item:** {{link to related work item}}
 - **Status:** Draft | Active | Completed
 
+## TOC
+
 ## Scope
 {{What is being tested and what is out of scope}}
 

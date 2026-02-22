@@ -8,7 +8,7 @@ Clone or fork this repository to bootstrap a new project with sensible defaults 
 
 - **Structured project management** — predefined folders for vision, planning boards, roadmaps, and reporting.
 - **Arc42-based architecture docs** — both a vision layer (what should be) and an implementation layer (what is), following the proven 12-section arc42 template.
-- **Document templates** — ready-made templates for requirements, architecture decisions, constraints, work items, test reports, security reviews, technical debt records, and more.
+- **Document templates** — ready-made templates for requirements, architecture decisions, constraints, work items, test reports, security reviews, security analysis scopes, technical debt records, and more.
 - **Documentation standards** — a central registry that defines document types, naming conventions, storage locations, and linked templates.
 - **Kanban-style planning board** — work items flow through `funnel → analyze → ready → backlog → implementing → done` (plus obsoleted/rejected).
 - **AI-agent personas** — seven specialised GitHub Copilot agent definitions (Architect, Developer, Tester, Requirements, Security, Documentation, License) with clear responsibilities, inputs, outputs, and limitations.
@@ -39,7 +39,10 @@ ProTemp/
 │   │   ├── 01_project_goals/
 │   │   ├── 02_requirements/             # Funnel → Analyze → Accepted / Obsoleted / Rejected
 │   │   ├── 03_architecture_vision/      # Arc42 sections 1–12 (target state)
-│   │   └── 04_security_concept/
+│   │   └── 04_security_concept/         # Security methodology, asset catalog, threat models
+│   │       ├── 01_security_concept.md   # STRIDE/DREAD framework
+│   │       ├── 02_asset_catalog.md      # CIA-rated asset inventory
+│   │       └── SAS_XXXX_*.md            # Security analysis scopes (threat models)
 │   ├── 03_plan/
 │   │   ├── 01_roadmap/
 │   │   └── 02_planning_board/           # Kanban columns (funnel → done)

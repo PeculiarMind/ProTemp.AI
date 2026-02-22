@@ -82,6 +82,12 @@
 - **Template**: `project_management/01_guidelines/documentation_standards/doc_templates/SECURITY_REVIEW_template.md`
 - **Linked to:** Work items, security concept, and related BUG records
 
+### Security Analysis Scope (SAS)
+- **Purpose**: Document comprehensive threat modeling analysis using STRIDE/DREAD methodologies for specific system scopes.
+- **Location**: `project_management/02_project_vision/04_security_concept/SAS_XXXX_*.md`
+- **Template**: `project_management/01_guidelines/documentation_standards/doc_templates/security_analysis_scope_template.md`
+- **Linked to:** Security concept, work items, security requirements, security reviews, and test plans
+
 ### Agent Definition
 - **Purpose**: Define the purpose, expertise, responsibilities, limitations, input requirements, and output format for an agent.
 - **Location**: `.github/agents/{{agent_name}}.agent.md`

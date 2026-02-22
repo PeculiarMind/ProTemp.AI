@@ -11,6 +11,7 @@
     - [STRIDE](#stride)
     - [DREAD](#dread)
     - [Risk Interpretation and Decision Framework](#risk-interpretation-and-decision-framework)
+- [2. Asset Catalog](#2-asset-catalog)
 
 ---
 
@@ -20,10 +21,10 @@
 This security concept document establishes the methodological framework for identifying, analyzing, and mitigating security risks throughout the ProTemp project lifecycle. It serves as the authoritative guide for conducting systematic threat modeling and security assessments.
 
 **Primary Audiences:**
-- **Security Experts** - Uses this framework to perform security reviews and maintain security documentation
-- **Developers** - Apply security analysis during implementation and understand mitigation requirements
-- **Architects** - Incorporate security considerations into architectural decisions and design reviews
-- **Testers** - Derive security test cases from identified threats and validate security controls
+- **Security Experts and Security Agent** - Human experts and the security agent use this framework to perform security reviews and maintain security documentation
+- **Developers and Developer Agent** - Apply security analysis during implementation and understand mitigation requirements
+- **Architects and Architect Agent** - Incorporate security considerations into architectural decisions and design reviews
+- **Testers and Tester Agent** - Derive security test cases from identified threats and validate security controls
 
 **Application Points:**
 - **Requirements Phase** - Identify security requirements from threat analysis
@@ -147,14 +148,36 @@ Combined Risk Score = (STRIDE Score + DREAD Score) / 2
 | 1.0 - 1.4   | NEGLIGIBLE | Document findings; maintain awareness | Acceptable; periodic review |
 
 **Risk Response Guidelines**:
-- **CRITICAL/HIGH**: Security expert creates bug work items assigned to developer; work item blocked until mitigations implemented and verified
-- **MEDIUM**: Security expert documents risk in SECREV report; project lead approves risk acceptance or mitigation plan
-- **LOW/NEGLIGIBLE**: Security expert documents in SECREV report for awareness; no immediate action required but findings remain on record
+- **CRITICAL/HIGH**: Security agent/expert creates bug work items assigned to developer; work item blocked until mitigations implemented and verified
+- **MEDIUM**: Security agent/expert documents risk in SECREV report; project lead approves risk acceptance or mitigation plan
+- **LOW/NEGLIGIBLE**: Security agent/expert documents in SECREV report for awareness; no immediate action required but findings remain on record
 
 **Risk Acceptance Process**:
 For MEDIUM-level risks that will not be immediately mitigated:
-1. Security expert documents threat, impact, and recommended mitigation in SECREV report
+1. Security agent/expert documents threat, impact, and recommended mitigation in SECREV report
 2. Project lead reviews and provides written acceptance with justification
 3. Accepted risk is tracked in security concept and reviewed quarterly
 4. Deployment proceeds with documented acceptance
+
+---
+
+## 2. Asset Catalog
+
+A centralized catalog of all project assets with CIA ratings is maintained in:
+
+**Location**: `project_management/02_project_vision/04_security_concept/02_asset_catalog.md`
+
+**Purpose**: The asset catalog serves as a foundational reference for:
+- System decomposition and threat modeling
+- Identifying which assets require protection
+- Prioritizing security measures based on CIA ratings
+- Tracking asset inventory across security analyses
+
+**Usage**: When performing security analysis using the Security Analysis Scope (SAS) template, reference and update the asset catalog to ensure consistent asset classification across the project.
+
+**Maintenance**: The asset catalog should be updated when:
+- New components or data stores are added to the system
+- Asset sensitivity changes (e.g., new regulations, business impact changes)
+- Security incidents reveal previously unidentified assets
+- Architecture changes affect asset boundaries or ownership
 

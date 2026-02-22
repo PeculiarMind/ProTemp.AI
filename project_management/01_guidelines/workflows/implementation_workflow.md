@@ -40,11 +40,11 @@
 **Task:** The agent assesses the results of the implemented feature from an architectural perspective. The agent verifies that the implementation aligns with the defined architecture and design principles. If the implementation does not align with the architecture, the agent creates a technical debt record (DEBTR) work item in the backlog and assigns it to developer.agent for remediation. If the implementation aligns with the architecture, the agent updates the status of the feature work item and commits changes to the repository.  
 **Input:** Completed feature work item, source code, and architecture vision documents.  
 **Result:** Architectural assessment completed, assessment result documented in work item, status updated, and changes committed to the repository.  
-**Next Step:** Assessment of work results by Security Expert.
+**Next Step:** Assessment of work results by Security Agent.
 
-#### Step 7: Assessment of work results by Security Expert
+#### Step 7: Assessment of work results by Security Agent
 **Agent:** security.agent  
-**Task:** The agent assesses the results of the implemented feature from a security perspective. The agent verifies that the implementation does not introduce any security vulnerabilities and adheres to security best practices. If any security issues are identified, the agent creates a bug work item in the backlog and assigns it to developer.agent for fixing. If the implementation meets security standards, the agent updates the status of the feature work item and commits changes to the repository.  
+**Task:** The security agent assesses the results of the implemented feature from a security perspective. The agent verifies that the implementation does not introduce any security vulnerabilities and adheres to security best practices. If any security issues are identified, the agent creates a bug work item in the backlog and assigns it to developer.agent for fixing. If the implementation meets security standards, the agent updates the status of the feature work item and commits changes to the repository.  
 **Input:** Completed feature work item, source code, and security guidelines documents.   
 **Result:** Security assessment completed, assessment result documented in work item, status updated, and changes committed to the repository.  
 **Next Step:** License Governance Assessment.

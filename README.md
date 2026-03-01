@@ -1,6 +1,24 @@
 # ProTemp.AI — Project Template
 
-ProTemp is a ready-to-use **project template** that provides a standardised folder structure, document templates, and AI-agent personas for managing the full lifecycle of a software project — from vision and requirements through architecture, implementation, testing, and documentation.
+**Table of Contents**
+
+- [Key Features](#key-features)
+- [Repository Structure](#repository-structure)
+- [Development Environment](#development-environment)
+  - [Using the Dev Container](#using-the-dev-container)
+  - [Alternative Setup](#alternative-setup)
+- [Getting Started](#getting-started)
+  - [Quick Start](#quick-start)
+  - [Understanding the Template Structure](#understanding-the-template-structure)
+- [Tools](#tools)
+  - [File/Directory Rename and Reference Updater](#filedirectory-rename-and-reference-updater)
+  - [Broken Reference Finder](#broken-reference-finder)
+- [AI Agent System](#ai-agent-system)
+- [License](#license)
+- [Credits](#credits)
+
+
+ProTemp.AI is a ready-to-use **Pro**ject **Temp**late that provides a standardised folder structure, document templates, and **AI**-agent personas for managing the full lifecycle of a software project — from vision and requirements through architecture, implementation, testing, and documentation.
 
 Clone or fork this repository to bootstrap a new project with sensible defaults for project management, quality assurance, and architecture documentation.
 

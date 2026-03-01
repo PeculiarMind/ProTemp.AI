@@ -1,5 +1,52 @@
 # Project Tools
 
+**Table of Contents**
+
+- [Available Tools](#available-tools)
+  - [rename_and_update_refs.py](#rename_and_update_refspy)
+  - [find_broken_refs.py](#find_broken_refspy)
+  - [md_toc.py](#md_tocpy)
+- [rename_and_update_refs.py](#rename_and_update_refspy)
+    - [Purpose](#purpose)
+    - [Usage](#usage)
+    - [Options](#options)
+    - [How It Works](#how-it-works)
+    - [Directory Support](#directory-support)
+    - [File Type Support](#file-type-support)
+    - [Best Practices](#best-practices)
+    - [Examples](#examples)
+    - [Troubleshooting](#troubleshooting)
+    - [Limitations](#limitations)
+    - [Technical Details](#technical-details)
+- [find_broken_refs.py](#find_broken_refspy)
+    - [Purpose](#purpose)
+    - [Usage](#usage)
+    - [Options](#options)
+    - [How It Works](#how-it-works)
+    - [Output Formats](#output-formats)
+    - [File Type Support](#file-type-support)
+    - [Best Practices](#best-practices)
+    - [Examples](#examples)
+    - [Known Limitations & False Positives](#known-limitations-false-positives)
+    - [Filtering False Positives](#filtering-false-positives)
+    - [Troubleshooting](#troubleshooting)
+    - [Integration Ideas](#integration-ideas)
+    - [Technical Details](#technical-details)
+- [md_toc.py](#md_tocpy)
+    - [Purpose](#purpose)
+    - [Usage](#usage)
+    - [Options](#options)
+    - [How It Works](#how-it-works)
+    - [Best Practices](#best-practices)
+    - [Examples](#examples)
+    - [Output Format](#output-format)
+    - [Anchor Link Compatibility](#anchor-link-compatibility)
+    - [Limitations](#limitations)
+    - [Integration Ideas](#integration-ideas)
+    - [Technical Details](#technical-details)
+- [Contributing New Tools](#contributing-new-tools)
+
+
 This directory contains utility scripts and tools to support project management and maintenance tasks.
 
 ## Available Tools
@@ -11,6 +58,10 @@ A Python script that intelligently renames or moves files and directories while 
 ### find_broken_refs.py
 
 A Python script that scans the workspace for broken references - links and textual references to files that don't exist.
+
+### md_toc.py
+
+A Python script that generates a table of contents for markdown files with navigatable links to chapters and sections.
 
 ---
 
@@ -486,6 +537,212 @@ fi
 **Entry point**: `find_broken_refs.py`  
 **Key modules**: `pathlib`, `re`, `argparse`, `os`, `sys`, `collections`  
 **Exit codes**: 0 = no broken refs, 1 = broken refs found
+
+---
+
+## md_toc.py
+
+A Python script that generates a table of contents for markdown files by extracting heading elements and creating navigatable links.
+
+#### Purpose
+
+Maintaining a table of contents in markdown documentation improves readability and navigation, especially in long documents. This tool automates TOC generation:
+
+1. Extracts all markdown headings from a file
+2. Generates GitHub-compatible anchor links
+3. Creates hierarchical structure with proper indentation
+4. Can insert TOC directly into the file or output separately
+5. Automatically replaces existing TOC when updating
+
+#### Usage
+
+```bash
+# Print TOC to stdout
+python3 project_management/00_tools/md_toc.py file.md
+
+# Insert TOC into the file after the first heading
+python3 project_management/00_tools/md_toc.py file.md --insert
+
+# Update existing TOC (or insert if not present)
+python3 project_management/00_tools/md_toc.py file.md --update
+
+# Save TOC to a separate file
+python3 project_management/00_tools/md_toc.py file.md --output toc.md
+
+# Filter heading levels (e.g., only h2 through h4)
+python3 project_management/00_tools/md_toc.py file.md --min-level 2 --max-level 4
+
+# Update TOC with filtered levels
+python3 project_management/00_tools/md_toc.py file.md --update --min-level 2 --max-level 3
+```
+
+#### Options
+
+| Option | Description |
+|--------|-------------|
+| `file` | Markdown file to process (required) |
+| `--insert` | Insert TOC into the file after the first heading |
+| `--update` | Update existing TOC or insert if not present (same as --insert) |
+| `--output FILE`, `-o FILE` | Write TOC to specific file |
+| `--max-level N` | Maximum heading level to include (default: 6) |
+| `--min-level N` | Minimum heading level to include (default: 1) |
+
+#### How It Works
+
+**Step 1: Heading Extraction**
+- Parses markdown file line-by-line
+- Detects ATX-style headings (`#` through `######`)
+- Extracts heading level and text
+- Filters headings based on `--min-level` and `--max-level` options
+
+**Step 2: Link Generation**
+- Converts heading text to GitHub-compatible anchor links
+- Removes markdown formatting (bold, italic, code, links)
+- Converts to lowercase and replaces spaces with hyphens
+- Strips special characters to create URL-safe anchors
+
+**Step 3: TOC Structure**
+- Calculates proper indentation based on heading hierarchy
+- Creates markdown list with navigatable links
+  ```markdown
+  **Table of Contents**
+  
+  - [Chapter 1](#chapter-1)
+    - [Section 1.1](#section-11)
+    - [Section 1.2](#section-12)
+  - [Chapter 2](#chapter-2)
+  ```
+
+**Step 4: Output Handling**
+- **Default**: Prints TOC to stdout
+- **`--insert`**: Replaces existing TOC (if found) and inserts after first heading
+- **`--output`**: Writes TOC to specified file
+
+#### Best Practices
+
+1. **Generate regularly** after adding new sections to documentation
+2. **Use `--insert`** to maintain TOC in the document itself
+3. **Filter levels** to avoid overly detailed TOCs in long documents
+4. **Commit TOC updates** along with content changes
+5. **Preview first** by running without `--insert`/`--update` to see the output
+6. **Use `--update`** for clarity when refreshing existing TOCs (reports "updated" vs "inserted")
+
+#### Examples
+
+**Example 1: Generate TOC for README**
+```bash
+python3 project_management/00_tools/md_toc.py README.md
+```
+
+**Example 2: Insert TOC into architecture document**
+```bash
+python3 project_management/00_tools/md_toc.py \
+  project_documentation/01_architecture/01_introduction_and_goals/introduction.md \
+  --insert
+```
+
+**Example 3: Update existing TOC after adding new sections**
+```bash
+python3 project_management/00_tools/md_toc.py guide.md --update --min-level 2
+```
+
+**Example 4: Create TOC with only main sections (h2 and h3)**
+```bash
+python3 project_management/00_tools/md_toc.py guide.md \
+  --min-level 2 \
+  --max-level 3 \
+  --insert
+```
+
+**Example 5: Save TOC to separate file**
+```bash
+python3 project_management/00_tools/md_toc.py documentation.md \
+  --output table_of_contents.md
+```
+
+**Example 6: Batch update all requirements files**
+```bash
+for file in project_management/02_project_vision/02_requirements/03_accepted/*.md; do
+  python3 project_management/00_tools/md_toc.py "$file" --update --min-level 2
+done
+```
+
+#### Output Format
+
+The generated TOC follows this structure:
+
+```markdown
+**Table of Contents**
+
+- [First Level Heading](#first-level-heading)
+  - [Second Level Heading](#second-level-heading)
+    - [Third Level Heading](#third-level-heading)
+```
+
+**Key features:**
+- Bold title "**Table of Contents**"
+- Blank line after title
+- Hierarchical bullets with 2-space indentation per level
+- GitHub-compatible anchor links
+- Blank line after TOC for separation
+
+#### Anchor Link Compatibility
+
+The script generates anchor links compatible with GitHub's markdown rendering:
+
+- Converts to lowercase
+- Replaces spaces with hyphens
+- Removes special characters
+- Strips markdown formatting from heading text
+- Example: `## API Reference (v2.0)` → `#api-reference-v20`
+
+#### Limitations
+
+- **ATX-style only**: Supports `#` headings, not underline-style (`===` or `---`)
+- **Single-line headings**: Headings must be on a single line
+- **No Setext headings**: Underlined headings are not detected
+- **GitHub anchors**: Anchor format follows GitHub conventions (may differ on other platforms)
+- **ASCII-friendly**: Non-ASCII characters in headings may create different anchors than expected
+
+#### Integration Ideas
+
+**Pre-commit hook for documentation:**
+```bash
+#!/bin/bash
+# Auto-update TOC in all markdown files with TOC section
+for file in $(git diff --cached --name-only | grep '\.md$'); do
+  if grep -q "Table of Contents" "$file"; then
+    python3 project_management/00_tools/md_toc.py "$file" --update
+    git add "$file"
+  fi
+done
+```
+
+**Makefile target:**
+```makefile
+.PHONY: toc
+toc:
+	@echo "Updating table of contents..."
+	@python3 project_management/00_tools/md_toc.py README.md --update
+	@echo "TOC updated successfully"
+```
+
+**VS Code task:**
+```json
+{
+  "label": "Update TOC",
+  "type": "shell",
+  "command": "python3 project_management/00_tools/md_toc.py ${file} --update"
+}
+```
+
+#### Technical Details
+
+**Language**: Python 3.7+  
+**Dependencies**: Standard library only (no external packages required)  
+**Entry point**: `md_toc.py`  
+**Key modules**: `re`, `argparse`, `pathlib`, `sys`  
+**Encoding**: UTF-8
 
 ---
 

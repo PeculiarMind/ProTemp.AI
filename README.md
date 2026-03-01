@@ -18,6 +18,11 @@ Clone or fork this repository to bootstrap a new project with sensible defaults 
 
 ```
 ProTemp/
+├── .devcontainer/                       # VS Code dev container configuration
+│   ├── devcontainer.json                # Container settings and extensions
+│   ├── Dockerfile                       # Ubuntu 24.04 LTS with dev tools
+│   └── README.md                        # Container documentation
+│
 ├── .github/
 │   ├── copilot-instructions.md          # Copilot agent orchestration rules
 │   └── agents/                          # Agent persona definitions
@@ -63,27 +68,76 @@ ProTemp/
 └── README.md
 ```
 
+## Development Environment
+
+ProTemp includes a pre-configured development container for VS Code that provides a consistent development environment across all platforms.
+
+### Using the Dev Container
+
+**Prerequisites:**
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) or compatible container runtime
+
+**Setup:**
+1. Clone or fork this repository
+2. Open the folder in VS Code
+3. When prompted, click "Reopen in Container" (or use Command Palette: `Dev Containers: Reopen in Container`)
+4. VS Code will build and start the container automatically
+
+**Included Tools:**
+- Ubuntu 24.04 LTS base
+- Git and GitHub CLI
+- Python (latest) - for running project tools
+- Node.js LTS - for JavaScript/TypeScript tooling
+- Bash shell with common utilities
+
+See [.devcontainer/README.md](.devcontainer/README.md) for configuration details.
+
+### Alternative Setup
+
+If you prefer not to use the dev container, you can work with ProTemp directly on your host machine. The only requirement is **Python 3.7+** for running the utility scripts in `project_management/00_tools/`.
+
 ## Getting Started
 
-1. **Clone or fork** this repository.
-2. Replace placeholder content in `project_management/02_project_vision/01_project_goals/` with your project's vision.
-3. Start deriving requirements — the Requirements agent or the workflow in `project_management/01_guidelines/workflows/requirements_engineering_workflow.md` will guide you.
-4. Use the document templates in `project_management/01_guidelines/documentation_standards/doc_templates/` whenever you create a new artifact.
-5. Consult `project_management/01_guidelines/documentation_standards/documentation-standards.md` for naming conventions and storage locations.
-6. Review [AGENTS.md](AGENTS.md) to understand available agents, workflows, and supporting standards.
+### Quick Start
+
+1. **Clone or fork** this repository
+2. **(Optional)** Set up the development environment (see [Development Environment](#development-environment) above)
+3. **Replace placeholder content** in `project_management/02_project_vision/01_project_goals/` with your project's vision and goals
+4. **Start deriving requirements** — use the Requirements agent or follow the workflow in [project_management/01_guidelines/workflows/requirements_engineering_workflow.md](project_management/01_guidelines/workflows/requirements_engineering_workflow.md)
+5. **Use document templates** from [project_management/01_guidelines/documentation_standards/doc_templates/](project_management/01_guidelines/documentation_standards/doc_templates/) whenever creating artifacts
+6. **Follow naming conventions** defined in [project_management/01_guidelines/documentation_standards/documentation-standards.md](project_management/01_guidelines/documentation_standards/documentation-standards.md)
+7. **Review** [AGENTS.md](AGENTS.md) to understand available agents, workflows, and supporting standards
+
+### Understanding the Template Structure
+
+ProTemp separates **vision** (what should be) from **reality** (what is):
+
+- **`project_management/02_project_vision/`** — Target state: goals, requirements, architecture vision, and security concept
+- **`project_documentation/01_architecture/`** — Current state: implemented architecture following arc42
+- **`project_management/03_plan/02_planning_board/`** — Work items flow through: funnel → analyze → ready → backlog → implementing → done
+
+This separation ensures your vision remains stable while implementation evolves incrementally.
 
 ## Tools
 
-ProTemp includes utility scripts in `project_management/00_tools/` to automate common project maintenance tasks:
+ProTemp includes Python utility scripts in [project_management/00_tools/](project_management/00_tools/) to automate project maintenance tasks. These tools help maintain reference integrity and support safe refactoring of project structure.
+
+**Requirements:** Python 3.7+
 
 ### File/Directory Rename and Reference Updater
 
 Automatically rename or move files and directories while updating all references throughout the workspace. Essential for refactoring project structure without breaking links.
 
 ```bash
-# Rename a file and update all references
+# Preview changes before applying (recommended)
 python3 project_management/00_tools/rename_and_update_refs.py \
   old_file.md new_file.md --dry-run
+
+# Rename a file and update all references
+python3 project_management/00_tools/rename_and_update_refs.py \
+  old_file.md new_file.md
 
 # Move a directory and update all nested file references  
 python3 project_management/00_tools/rename_and_update_refs.py \
@@ -93,46 +147,52 @@ python3 project_management/00_tools/rename_and_update_refs.py \
 **Features:**
 - Updates references in markdown links, code, configs, and documentation
 - Handles both files and directories recursively
-- Supports various reference formats (plain text, quoted, backticks, etc.)
+- Supports various reference formats (plain text, quoted, backticks, markdown links)
 - Dry-run mode to preview changes before applying
 - Automatic workspace detection
 
 ### Broken Reference Finder
 
-Scan the workspace for broken references - links and textual references pointing to files that don't exist.
+Scan the workspace for broken references — links and textual references pointing to files that don't exist.
 
 ```bash
 # Find all broken references
 python3 project_management/00_tools/find_broken_refs.py
 
-# Show detailed output
+# Show detailed output with path resolution
 python3 project_management/00_tools/find_broken_refs.py --verbose
+
+# Output in different formats (full, simple, json)
+python3 project_management/00_tools/find_broken_refs.py --format simple
 ```
 
 **Features:**
 - Detects broken markdown links, quoted paths, and backticked references
 - Scans documentation, code, and configuration files
 - Reports line numbers and reference types
+- Multiple output formats (full, simple, JSON)
 - Useful for pre-commit checks and CI/CD pipelines
 - Exit code 1 if broken references found (CI-friendly)
 
-See [project_management/00_tools/TOOLS.md](project_management/00_tools/TOOLS.md) for complete documentation and examples.
+See [project_management/00_tools/TOOLS.md](project_management/00_tools/TOOLS.md) for complete documentation, advanced usage, and examples.
 
 ## AI Agent System
 
-ProTemp ships with seven GitHub Copilot agent personas defined in `.github/agents/`. An orchestration layer in `.github/copilot-instructions.md` routes tasks to the most appropriate agent automatically.
+ProTemp ships with seven specialized GitHub Copilot agent personas defined in [.github/agents/](.github/agents/). Each agent has clearly defined responsibilities, expertise, inputs, outputs, and limitations.
 
-See [AGENTS.md](AGENTS.md) for the complete agent registry, including supporting standards and workflow definitions.
+An orchestration layer in [.github/copilot-instructions.md](.github/copilot-instructions.md) automatically routes tasks to the most appropriate agent, enabling autonomous execution of complex, multi-step workflows.
+
+See [AGENTS.md](AGENTS.md) for the complete agent registry, including supporting standards ([communication_standards.md](project_management/01_guidelines/agent_behavior/communication_standards.md)) and workflow definitions.
 
 | Agent | Responsibility |
 |-------|---------------|
-| **Architect** | Architecture vision & implementation compliance |
-| **Developer** | Backlog selection, implementation, and close-out |
-| **Tester** | Test planning, execution, and reporting |
-| **Requirements** | Requirements elicitation and specification |
-| **Security** | Security reviews and security concept maintenance |
-| **Documentation** | User, ops, and dev guide maintenance |
-| **License** | License compliance and dependency auditing |
+| **Architect** | Architecture vision maintenance & implementation compliance reviews |
+| **Developer** | Backlog item selection, implementation, and work item close-out |
+| **Tester** | Test planning, test creation, execution, and test reporting |
+| **Requirements** | Requirements elicitation, derivation, and specification |
+| **Security** | Security reviews, threat modeling, and security concept maintenance |
+| **Documentation** | User guides, operations guides, and developer documentation |
+| **License** | License compliance auditing and dependency attribution |
 
 ## License
 
